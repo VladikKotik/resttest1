@@ -17,7 +17,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    List<PostModel> posts;
+    List<PostPreviewModel> posts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +30,20 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        PostsAdapter adapter = new PostsAdapter(posts);
+        PostsAdapter adapter = new PostsAdapter(this,posts);
         recyclerView.setAdapter(adapter);
 
-        //App.getApi().getData("bash", 50).enqueue(new Callback<List<PostModel>>() {
-        //App.getUmoriliApiRandom().getRandomData( 10).enqueue(new Callback<List<PostModel>>() {
-        App.getMuzeyApiPosts().getData().enqueue(new Callback<List<PostModel>>() {
+        //App.getApi().getData("bash", 50).enqueue(new Callback<List<PostPreviewModel>>() {
+        //App.getUmoriliApiRandom().getRandomData( 10).enqueue(new Callback<List<PostPreviewModel>>() {
+        App.getMuzeyApiPosts().getData().enqueue(new Callback<List<PostPreviewModel>>() {
             @Override
-            public void onResponse(Call<List<PostModel>> call, Response<List<PostModel>> response) {
+            public void onResponse(Call<List<PostPreviewModel>> call, Response<List<PostPreviewModel>> response) {
                 posts.addAll(response.body());
                 recyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<List<PostModel>> call, Throwable t) {
+            public void onFailure(Call<List<PostPreviewModel>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
             }
         });

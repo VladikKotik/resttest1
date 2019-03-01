@@ -3,7 +3,7 @@ package things.test.ru.resttest1;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PostModel {
+public class PostPreviewModel {
 
     @SerializedName("ID")
     @Expose
@@ -11,9 +11,9 @@ public class PostModel {
     @SerializedName("post_title")
     @Expose
     private String postTitle;
-    @SerializedName("post_content")
+    @SerializedName("guid")
     @Expose
-    private String postContent;
+    private String guid;
 
     public String getID() {
         return iD;
@@ -31,12 +31,12 @@ public class PostModel {
         this.postTitle = postTitle;
     }
 
-    public String getPostContent() {
-        return postContent;
+    public String getGuid() {
+        return guid;
     }
 
-    public void setPostContent(String postContent) {
-        this.postContent = postContent;
+    public void setGuid(String postContent) {
+        this.guid = postContent;
     }
 
 }

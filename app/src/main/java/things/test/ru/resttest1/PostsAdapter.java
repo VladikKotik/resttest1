@@ -1,7 +1,9 @@
 package things.test.ru.resttest1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -56,16 +58,29 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         return posts.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //TextView post;
         TextView title;
         ImageView image;
+        CardView cv;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.postpreviewitem_title);
             image=(ImageView) itemView.findViewById(R.id.postpreviewitem_photo);
-            //site = (TextView) itemView.findViewById(R.id.postitem_site);
+            cv=(CardView) itemView.findViewById(R.id.cv);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                PostPreviewModel onePost = posts.get(position);
+                Intent intent = new Intent(mContext, PostActivity.class);
+                intent.putExtra("post_ID", Integer.parseInt(onePost.getID()));
+                mContext.startActivity(intent);//все активити над прописывать в манифесте!!
+            }
         }
     }
 }

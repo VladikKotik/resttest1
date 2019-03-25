@@ -37,10 +37,18 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         //final PostModel[] post = new PostModel[1];
         int post_id=getIntent().getIntExtra("post_ID",-1); //аргумент приходит, а дальше хуй
+        //int post_id = -1;
+        //System.out.println("===2REQUEST228========");
+
+        //System.out.println(App.getMuzeyApiPosts().getPost(post_id));
+
         App.getMuzeyApiPosts().getPost(post_id).enqueue(new Callback<PostModel>() {
             @Override
             public void onResponse(Call<PostModel> call, Response<PostModel> response) {
-                post=response.body();   //вот тут грит post null и пизда
+                System.out.println("===REQUEST228========="+call+"===============");
+                if(response.isSuccessful()) {
+                    post = response.body();   //вот тут грит post null и пизда
+                }
 
             }
 

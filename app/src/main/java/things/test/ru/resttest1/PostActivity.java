@@ -37,19 +37,21 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         //final PostModel[] post = new PostModel[1];
         int post_id=getIntent().getIntExtra("post_ID",-1); //аргумент приходит, а дальше хуй
-        //int post_id = -1;
-        //System.out.println("===2REQUEST228========");
-
-        //System.out.println(App.getMuzeyApiPosts().getPost(post_id));
-
         App.getMuzeyApiPosts().getPost(post_id).enqueue(new Callback<PostModel>() {
             @Override
             public void onResponse(Call<PostModel> call, Response<PostModel> response) {
-                System.out.println("===REQUEST228========="+call+"===============");
-                if(response.isSuccessful()) {
-                    post = response.body();   //вот тут грит post null и пизда
-                }
+                post=response.body();   //вот тут грит post null и пизда
+                post_title=findViewById(R.id.post_title);
+                post_content=findViewById(R.id.post_content);
+                post_image=findViewById(R.id.post_image);
 
+                post_title.setText(post.getPostTitle());
+                post_content.setText(post.getPostContent());
+                if (post != null) {
+                    Glide.with(PostActivity.this).load(post.getGuid())
+                            .placeholder(R.drawable.ic_cloud_off_red)
+                            .into(post_image);
+                }
             }
 
             @Override
@@ -58,19 +60,13 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-        post_title=findViewById(R.id.post_title);
-        post_content=findViewById(R.id.post_content);
-        post_image=findViewById(R.id.post_image);
+        //вот тут пост уже нулл cyfчала всё до запроса, а потом уже запрос так шо над все внутри во время выполнения запроса
 
-        post_title.setText(post.getPostTitle());
-        post_content.setText(post.getPostContent());
         //тут мб сделать регеэкспом шоб игнорил <img * />
 
-        Glide.with(this)
-                .load(post.getGuid())
-                .placeholder(R.drawable.ic_cloud_off_red)
-                .into(post_image);
+
 
     }
 
 }
+
